@@ -46,7 +46,7 @@ class DefaultMatrixTest(TestCase):
     def test_difference_between_diagonals_should_be_zero(self):
         self.assertEqual(0, self.matrix.diagonal_difference())
 
-    def testt_difference_between_diagonals_should_be_3_when_primary_values_are_modified(self): #noqa
+    def test_difference_between_diagonals_should_be_3_when_primary_values_are_modified(self): #noqa
         # 2 2 3
         # 4 3 5
         # 7 8 5

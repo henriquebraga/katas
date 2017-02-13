@@ -31,8 +31,9 @@ class Game:
         'h': 'horizontal',
     }
 
-    def place_ship(self, ship, direction, start_point, player):
-        line = self.boards[player]._squares[int(start_point[1])]
+    def place_ship(self, ship, direction, position, player):
+        line, column = (int(coordinate) for coordinate in position)
+        line = self.boards[player]._squares[column]
         for n in range(5):
             line[n] = ship
 

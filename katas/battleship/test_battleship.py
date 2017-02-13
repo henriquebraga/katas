@@ -55,7 +55,7 @@ class GameTest(TestCase):
         board_player1 = self.game.boards['p1']
         self.game.place_ship(ship='aircraft_carrier',
                              direction='v',
-                             start_point='00',
+                             position='00',
                              player='p1'
                              )
         expected = ['aircraft_carrier'] * 5

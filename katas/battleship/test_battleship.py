@@ -24,6 +24,8 @@ class GameTest(TestCase):
 
     def setUp(self):
         self.game = Game()
+        self.board_p1 = self.game.boards['p1']
+
 
     def test_game_should_have_five_ships(self):
         self.assertEqual(5, len(self.game.ships))
@@ -52,17 +54,41 @@ class GameTest(TestCase):
 
     def test_when_p1_place_an_aircraft_carrier_positions_should_be_changed(
        self):
-        board_player1 = self.game.boards['p1']
-        self.game.place_ship(ship='aircraft_carrier',
-                             direction='v',
-                             position='00',
-                             player='p1'
+
+        self.game = Game()
+        self.game.place_ship(
+                            ship='aircraft_carrier',
+                            direction='v',
+                            position='00',
+                            player='p1'
                              )
-        expected = ['aircraft_carrier'] * 5
-        self.assertSequenceEqual(expected, board_player1._squares[0][:5])
+        expected = ['aircraft_carrier'] * 5 + ['_'] * 5
+        self.assertSequenceEqual(expected, self.board_p1._squares[0][:])
 
+    def test_when_p1_place_a_cuirassed_positions_should_be_changed(self):
+        self.game.boards['p1'] = Board()
 
+        self.game.place_ship(
+                    ship='cuirassed',
+                    direction='h',
+                    position='00',
+                    player='p1'
+                    )
 
+        expected = ['cuirassed'] * 4 + ['_', '_', '_', '_', '_', '_']
+        self.assertSequenceEqual(expected, self.game.boards['p1']._squares[0][:])
 
+    def test_when_p1_place_a_patrol_in_second_column_it_should_be_changed(self):
+        self.game.boards['p1'] = Board()
 
+        self.game.place_ship(
+            ship='patrol',
+            direction='h',
+            position='10',
+            player='p1'
+        )
 
+        expected = ['patrol'] * 2 + ['_', '_', '_', '_', '_', '_', '_', '_']
+        self.assertSequenceEqual(expected, self.game.boards['p1']._squares[1][:])
+
+    

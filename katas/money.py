@@ -48,6 +48,40 @@ def calculate_money(to_be_paid, paid):
 			message=message
 			)
 
+	if change >= 0.5:
+		message, change = count_coins_for_change(
+			change=change,
+			coin_value=0.5,
+			message=message
+			)
+	if change >= 0.25:
+		message, change = count_coins_for_change(
+			change=change,
+			coin_value=0.25,
+			message=message
+			)
+	if change >= 0.1:
+		message, change = count_coins_for_change(
+			change=change,
+			coin_value=0.1,
+			message=message
+			)
+
+	if change >= 0.05:
+		message, change = count_coins_for_change(
+			change=change,
+			coin_value=0.05,
+			message=message
+			)
+
+
+	if change >= 0.01:
+		message, change = count_coins_for_change(
+			change=change,
+			coin_value=0.01,
+			message=message
+			)
+
 	return message
 
 
@@ -74,8 +108,32 @@ def format_paper_money_message(quantity, paper_money_value, message):
 
 	return _message
 
+def count_coins_for_change(change, coin_value, message=''):
+	coins = 0
+	change_remaining = change
+	while change_remaining >= coin_value:
+		coins += 1
+		change_remaining -= coin_value
+
+	message = format_coin_message(coins, coin_value, message)
+
+	return message, change_remaining
+
+def format_coin_message(quantity, coin_value, message):
+	_message = copy.copy(message)
+	if _message:
+		_message += ', '
+
+	_message += 'Moedas de R${value}: {quantity}'.format(
+		value=coin_value,
+		quantity=quantity
+		)
+
+	return _message
+
 
 if __name__ == '__main__':
+
 	assert calculate_money(to_be_paid=100, paid=100) == 'Sem cédulas. Valor pago é exatamente igual.'
 	assert calculate_money(to_be_paid=150, paid=150) == 'Sem cédulas. Valor pago é exatamente igual.'
 
@@ -124,8 +182,6 @@ if __name__ == '__main__':
 
 	assert calculate_money(to_be_paid=250, paid=477) == 'Cédulas de R$100: 2, Cédulas de R$10: 2, Cédulas de R$5: 1, Cédulas de R$1: 2'
 
-
-
-
-
+	assert calculate_money(to_be_paid=250, paid=250.50) == 'Moedas de R$0.5: 1'
+	assert calculate_money(to_be_paid=250, paid=250.25) == 'Moedas de R$0.25: 1'
 
